@@ -4,13 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.first.studytest.MainActivity">
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:textAllCaps="false"
-        android:text="ProgressBar"
-        android:id="@+id/btn_ProgressBar" />
+    tools:context="com.example.first.studytest.ProgressBar.ProgressBarActivity">
 
 </android.support.constraint.ConstraintLayout>
