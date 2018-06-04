@@ -6,4 +6,27 @@
     android:layout_height="match_parent"
     tools:context="com.example.first.studytest.ProgressBar.ProgressBarActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="普通圆形"
+            android:id="@+id/btn_ProgressBar_round" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="普通进度条"
+            android:id="@+id/btn_ProgressBar_normal" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="自定义进度条"
+            android:id="@+id/btn_ProgressBar_diy" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

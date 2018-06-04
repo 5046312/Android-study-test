@@ -16,7 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProgressBar.ProgressBarActivity"></activity>
+        <activity android:name=".ProgressBar.ProgressBarActivity" />
+        <activity android:name=".ProgressBar.ProgressBarRoundActivity" />
+        <activity android:name=".ProgressBar.ProgressBarNormalActivity" />
+        <activity android:name=".ProgressBar.ProgressBarDIYActivity" />
+        <activity android:name=".PullRefresh.NormalPullRefreshActivity" />
+        <activity android:name=".RecyclerView.RecyclerViewActivity"></activity>
     </application>
 
 </manifest>
