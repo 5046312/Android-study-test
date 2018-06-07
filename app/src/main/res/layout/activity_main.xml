@@ -31,6 +31,13 @@
             android:textAllCaps="false"
             android:text="下拉刷新"
             android:id="@+id/pullRefresh" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textAllCaps="false"
+            android:text="Notification"
+            android:id="@+id/Notification" />
     </LinearLayout>
 
 

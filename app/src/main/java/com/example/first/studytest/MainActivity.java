@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.first.studytest.Notification.NotificationActivity;
 import com.example.first.studytest.ProgressBar.ProgressBarActivity;
 import com.example.first.studytest.PullRefresh.NormalPullRefreshActivity;
 
@@ -21,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
         btn = findViewById(R.id.pullRefresh);
         btn.setOnClickListener(new BtnClick());
+
+        btn = findViewById(R.id.Notification);
+        btn.setOnClickListener(new BtnClick());
     }
 
     class BtnClick implements View.OnClickListener {
@@ -34,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.pullRefresh: // 下拉刷新
                     intent.setClass(MainActivity.this, NormalPullRefreshActivity.class);
+                    break;
+
+                case R.id.Notification: // 通知
+                    intent.setClass(MainActivity.this, NotificationActivity.class);
                     break;
             }
             startActivity(intent);

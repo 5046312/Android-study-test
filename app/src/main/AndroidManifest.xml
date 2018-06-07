@@ -21,7 +21,8 @@
         <activity android:name=".ProgressBar.ProgressBarNormalActivity" />
         <activity android:name=".ProgressBar.ProgressBarDIYActivity" />
         <activity android:name=".PullRefresh.NormalPullRefreshActivity" />
-        <activity android:name=".RecyclerView.RecyclerViewActivity"></activity>
+        <activity android:name=".RecyclerView.RecyclerViewActivity" />
+        <activity android:name=".Notification.NotificationActivity"></activity>
     </application>
 
 </manifest>
