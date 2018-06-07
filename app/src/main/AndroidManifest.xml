@@ -22,7 +22,10 @@
         <activity android:name=".ProgressBar.ProgressBarDIYActivity" />
         <activity android:name=".PullRefresh.NormalPullRefreshActivity" />
         <activity android:name=".RecyclerView.RecyclerViewActivity" />
-        <activity android:name=".Notification.NotificationActivity"></activity>
+        <activity android:name=".Notification.NotificationActivity" />
+        <activity android:name=".ActionBar.ActionBarActivity" />
+        <activity android:name=".ActionBar.NormalActionBarActivity" />
+        <activity android:name=".ActionBar.ClickMenuActivity"></activity>
     </application>
 
 </manifest>

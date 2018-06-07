@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:title="上一步"
+        app:showAsAction="always"
+        android:enabled="false" />
+
+    <item
+        android:title="下一步"
+        app:showAsAction="always" />
+
+    <item android:title="测试"/>
+    <item android:title="测试"/>
+    <item android:title="更多">
+        <menu>
+            <item android:title="更多1"/>
+            <item android:title="更多2"/>
+            <item android:title="更多3"/>
+        </menu>
+    </item>
+</menu>

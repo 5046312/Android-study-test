@@ -38,6 +38,14 @@
             android:textAllCaps="false"
             android:text="Notification"
             android:id="@+id/Notification" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textAllCaps="false"
+            android:text="ActionBar"
+            android:id="@+id/ActionBar" />
     </LinearLayout>
 
 
