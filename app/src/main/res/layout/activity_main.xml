@@ -46,6 +46,15 @@
             android:textAllCaps="false"
             android:text="ActionBar"
             android:id="@+id/ActionBar" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textAllCaps="false"
+            android:text="Alarm Manager"
+            android:id="@+id/AlarmManager" />
+
+
     </LinearLayout>
 
 

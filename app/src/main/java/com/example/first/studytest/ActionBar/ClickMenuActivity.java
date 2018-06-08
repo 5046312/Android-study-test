@@ -47,7 +47,6 @@ public class ClickMenuActivity extends AppCompatActivity implements View.OnClick
                         return false;
                     }
                 });
-
                 popupMenu.show();
                 break;
         }

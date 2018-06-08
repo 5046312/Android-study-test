@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.first.studytest.ActionBar.ActionBarActivity;
+import com.example.first.studytest.AlarmManager.AlarmManagerActivity;
 import com.example.first.studytest.Notification.NotificationActivity;
 import com.example.first.studytest.ProgressBar.ProgressBarActivity;
 import com.example.first.studytest.PullRefresh.NormalPullRefreshActivity;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
         btn = findViewById(R.id.ActionBar);
         btn.setOnClickListener(new BtnClick());
+
+        btn = findViewById(R.id.AlarmManager);
+        btn.setOnClickListener(new BtnClick());
     }
 
     class BtnClick implements View.OnClickListener {
@@ -51,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.ActionBar: // ActionBar
                     intent.setClass(MainActivity.this, ActionBarActivity.class);
+                    break;
+
+                case R.id.AlarmManager: // AlarmManager
+                    intent.setClass(MainActivity.this, AlarmManagerActivity.class);
                     break;
             }
             startActivity(intent);

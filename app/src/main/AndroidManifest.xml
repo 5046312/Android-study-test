@@ -25,7 +25,8 @@
         <activity android:name=".Notification.NotificationActivity" />
         <activity android:name=".ActionBar.ActionBarActivity" />
         <activity android:name=".ActionBar.NormalActionBarActivity" />
-        <activity android:name=".ActionBar.ClickMenuActivity"></activity>
+        <activity android:name=".ActionBar.ClickMenuActivity" />
+        <activity android:name=".AlarmManager.AlarmManagerActivity"></activity>
     </application>
 
 </manifest>
