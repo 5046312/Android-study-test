@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActionBar.ClickMenuActivity">
+    tools:context=".ActionBar.ClickMenuActivity"
+    android:orientation="vertical">
 
     <Button
         android:layout_width="match_parent"
@@ -20,4 +22,4 @@
         android:id="@+id/click_menu_context"
         />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

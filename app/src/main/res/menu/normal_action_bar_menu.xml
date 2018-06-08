@@ -11,7 +11,9 @@
 
     <item
         android:title="下一步"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:id="@+id/action_bar_next_item"
+        />
 
     <item android:title="测试"/>
     <item android:title="测试"/>
