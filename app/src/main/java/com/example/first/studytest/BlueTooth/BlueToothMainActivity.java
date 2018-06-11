@@ -161,13 +161,11 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
     void connectDevice(BluetoothDevice device) {
         BluetoothDevice bluetoothDevice = blueadapter.getRemoteDevice(device.getAddress());
 
-
         try {
             UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
             BluetoothSocket bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid);
             bluetoothSocket.connect();
             OutputStream outputStream = bluetoothSocket.getOutputStream();
-
 
             String str = "hello world";
             byte[] data = str.getBytes("gbk");
@@ -176,6 +174,20 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+
+
+    class printString extends Thread{
+        String str;
+        public printString(String str){
+            this.str = str;
+        }
+
+        @Override
+        public void run() {
+
         }
     }
 }
