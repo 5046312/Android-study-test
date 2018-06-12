@@ -35,5 +35,8 @@ public class IntentMainActivity extends AppCompatActivity implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UniversalToast.makeText(IntentMainActivity.this, String.valueOf(resultCode), UniversalToast.LENGTH_SHORT).show();
+        if(data != null){
+            System.out.println(data.getExtras().getString("name"));
+        }
     }
 }
