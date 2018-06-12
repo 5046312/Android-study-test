@@ -22,6 +22,7 @@ import com.example.first.studytest.R;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,7 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
     AlertDialog.Builder builder;
 
     Button btn_scan; // 搜索按钮
+    Button btn_print; // 打印按钮
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,9 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
 
         btn_scan = findViewById(R.id.scan_bt);
         btn_scan.setOnClickListener(this);
+
+        btn_print = findViewById(R.id.print_bt);
+        btn_print.setOnClickListener(this);
 
         blueadapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -110,6 +115,25 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
                 deviceList.clear();
                 blueadapter.startDiscovery();
                 break;
+            case R.id.print_bt: // 打印数据
+                print("打印内容\n");
+                break;
+        }
+    }
+
+    // 打印
+    void print(String str){
+        if(bluetoothSocket != null && bluetoothSocket.isConnected()){
+            try {
+                System.out.println("设备连接成功，开始打印");
+                outputStream = bluetoothSocket.getOutputStream();
+                byte[] data = str.getBytes("gbk");
+                outputStream.write(data, 0, data.length);
+                outputStream.flush();
+                System.out.println("发送");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -130,64 +154,64 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
     AlertDialog device_choose_dialog;
     List<BluetoothDevice> deviceList = new ArrayList<>(); // 发现的设备列表
 
+    AlertDialog mDeviceListAlertDialog; // 设备选择框弹窗
     // 显示搜索到的设备
     void showDeviceList(BluetoothDevice device){
-        deviceList.add(device);
-        builder.setTitle("选择蓝牙设备");
+        if(device != null && device.getName() != null){
+            deviceList.add(device);
+        }
         List<String> mDeviceName = new ArrayList<>();
         for (BluetoothDevice btDevice: deviceList){
             mDeviceName.add(btDevice.getName());
         }
         String[] deviceName = mDeviceName.toArray(new String[mDeviceName.size()]);
-        builder.setItems(deviceName, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // 取消搜索
-                if (blueadapter != null && blueadapter.isDiscovering()) {
-                    System.out.println("取消搜索");
-                    blueadapter.cancelDiscovery();
-
+        if(mDeviceListAlertDialog == null){
+            builder.setTitle("选择蓝牙设备");
+            builder.setItems(deviceName, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // 取消搜索
+                    if (blueadapter != null && blueadapter.isDiscovering()) {
+                        System.out.println("取消搜索");
+                        blueadapter.cancelDiscovery();
+                    }
+                    connectDevice(deviceList.get(which));
                 }
-
-                connectDevice(deviceList.get(which));
-//                UniversalToast.makeText(BlueToothMainActivity.this, address, UniversalToast.LENGTH_SHORT).show();
-            }
-        });
-        builder.show();
-    }
-
-    BluetoothDevice device;
-
-    void connectDevice(BluetoothDevice device) {
-        BluetoothDevice bluetoothDevice = blueadapter.getRemoteDevice(device.getAddress());
-
-        try {
-            UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-            BluetoothSocket bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid);
-            bluetoothSocket.connect();
-            OutputStream outputStream = bluetoothSocket.getOutputStream();
-
-            String str = "hello world";
-            byte[] data = str.getBytes("gbk");
-            outputStream.write(data, 0, data.length);
-            outputStream.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            });
+            mDeviceListAlertDialog = builder.show();
+        }else{
+            mDeviceListAlertDialog.dismiss();
+            mDeviceListAlertDialog = null;
+            showDeviceList(null);
         }
     }
 
-
+    BluetoothDevice device;
+    OutputStream outputStream;
+    BluetoothSocket bluetoothSocket;
+    void connectDevice(BluetoothDevice device) {
+        BluetoothDevice bluetoothDevice = blueadapter.getRemoteDevice(device.getAddress());
+        new printString(device,"打印文字\n").start();
+    }
 
     class printString extends Thread{
         String str;
-        public printString(String str){
+        BluetoothDevice device;
+        public printString(BluetoothDevice device,String str){
+            this.device = device;
             this.str = str;
         }
 
         @Override
         public void run() {
-
+            try {
+                UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+                bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid);
+                bluetoothSocket.connect();
+                print("连接成功\n");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
