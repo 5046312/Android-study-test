@@ -1,7 +1,9 @@
 package com.example.first.studytest.BlueTooth;
 
+import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import xyz.bboylin.universialtoast.UniversalToast;
@@ -81,7 +84,6 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
                         System.out.println("蓝牙关");
                     }
                     break;
-
             }
         }
     };
@@ -108,8 +110,10 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
         intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+
         intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
         intentFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+
         intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(broadcastReceiver, intentFilter);
 
@@ -145,7 +149,6 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
         switch (v.getId()){
             case R.id.open_bt:
                 Intent enabler = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//                startActivityForResult(enabler, 1);
                 startActivity(enabler);
                 break;
             case R.id.scan_bt:
@@ -216,7 +219,9 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
                     new connectDevice(deviceList.get(which)).start();
                 }
             });
-            mDeviceListAlertDialog = builder.show();
+            if(deviceName.length > 0){
+                mDeviceListAlertDialog = builder.show();
+            }
         }else{
             mDeviceListAlertDialog.dismiss();
             mDeviceListAlertDialog = null;

@@ -24,14 +24,12 @@ public class IntentNewActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.withoutResult:
-                // 直接返回，onActivityResult 返回 0
+            case R.id.withoutResult: // 直接返回，onActivityResult 返回 0
                 finish();
                 break;
-            case R.id.withResult:
-                // setResult
+            case R.id.withResult: // setResult
                 setResult(999);
-//                finish();
+                finish();
                 break;
         }
     }
