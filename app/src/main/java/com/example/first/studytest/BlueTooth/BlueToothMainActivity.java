@@ -48,6 +48,44 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
 
     Handler handler = new Handler();
 
+    // 蓝牙状态监听
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            switch (action){
+                case BluetoothDevice.ACTION_FOUND: // 发现设备
+                    showDeviceList(device);
+                    break;
+                case BluetoothAdapter.ACTION_DISCOVERY_FINISHED: // 搜索结束
+                    // 搜索结束
+                    btn_scan.setEnabled(true);
+                    btn_scan.setText("搜索设备");
+                    break;
+                case BluetoothDevice.ACTION_ACL_CONNECTED: // 设备连接
+                    System.out.println("链接设备:" + device.getName());
+                    bt_device_name.setText(device.getName());
+                    break;
+                case BluetoothDevice.ACTION_ACL_DISCONNECTED:
+                    System.out.println("断开链接:" + device.getName());
+                    bt_device_name.setText("未连接");
+                    break;
+                case BluetoothAdapter.ACTION_STATE_CHANGED: // 蓝牙状态
+                    int blueState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, 0);
+                    if(blueState == BluetoothAdapter.STATE_ON){
+                        // 蓝牙开
+                        System.out.println("蓝牙开");
+                    }else if(blueState == BluetoothAdapter.STATE_OFF){
+                        // 蓝牙关
+                        System.out.println("蓝牙关");
+                    }
+                    break;
+
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +108,9 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
         intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+        intentFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(broadcastReceiver, intentFilter);
 
         // 显示alertDialog
@@ -98,28 +139,14 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
         return blueadapter.isEnabled();
     }
 
-    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if(BluetoothDevice.ACTION_FOUND.equals(action)){
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                showDeviceList(device);
-            }else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)){
-                // 搜索结束
-                btn_scan.setEnabled(true);
-                btn_scan.setText("搜索设备");
-            }
-        }
-    };
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.open_bt:
                 Intent enabler = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enabler, 1);
+//                startActivityForResult(enabler, 1);
+                startActivity(enabler);
                 break;
             case R.id.scan_bt:
                 btn_scan.setEnabled(false);
@@ -137,7 +164,6 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
     void print(String str){
         if(bluetoothSocket != null && bluetoothSocket.isConnected()){
             try {
-                System.out.println("设备连接成功，开始打印");
                 outputStream = bluetoothSocket.getOutputStream();
                 byte[] data = str.getBytes("gbk");
                 outputStream.write(data, 0, data.length);
@@ -187,7 +213,7 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
                         System.out.println("取消搜索");
                         blueadapter.cancelDiscovery();
                     }
-                    connectDevice(deviceList.get(which));
+                    new connectDevice(deviceList.get(which)).start();
                 }
             });
             mDeviceListAlertDialog = builder.show();
@@ -198,18 +224,11 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-
-    void connectDevice(BluetoothDevice device) {
-        BluetoothDevice bluetoothDevice = blueadapter.getRemoteDevice(device.getAddress());
-        new printString(device,"打印文字\n").start();
-    }
-
-    class printString extends Thread{
-        String str;
+    // 连接设备线程
+    class connectDevice extends Thread{
         BluetoothDevice device;
-        public printString(BluetoothDevice device,String str){
+        public connectDevice(BluetoothDevice device){
             this.device = device;
-            this.str = str;
         }
 
         @Override
@@ -218,15 +237,6 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
                 UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
                 bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid);
                 bluetoothSocket.connect();
-                if(bluetoothSocket.isConnected()){
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            bt_device_name.setText("已连接");
-                        }
-                    });
-                    print("连接成功\n");
-                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

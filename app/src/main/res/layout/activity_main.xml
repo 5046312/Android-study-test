@@ -54,8 +54,26 @@
             android:text="Alarm Manager"
             android:id="@+id/AlarmManager" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textAllCaps="false"
+            android:text="BlueTooth"
+            android:id="@+id/BlueTooth" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textAllCaps="false"
+            android:text="Alert Dialog"
+            android:id="@+id/AlertDialog" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textAllCaps="false"
+            android:text="Intent"
+            android:id="@+id/Intent" />
 
     </LinearLayout>
-
-
 </android.support.constraint.ConstraintLayout>

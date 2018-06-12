@@ -9,6 +9,9 @@ import android.widget.Button;
 
 import com.example.first.studytest.ActionBar.ActionBarActivity;
 import com.example.first.studytest.AlarmManager.AlarmManagerActivity;
+import com.example.first.studytest.AlertDialog.AlertDialogMainActivity;
+import com.example.first.studytest.BlueTooth.BlueToothMainActivity;
+import com.example.first.studytest.Intent.IntentMainActivity;
 import com.example.first.studytest.Notification.NotificationActivity;
 import com.example.first.studytest.ProgressBar.ProgressBarActivity;
 import com.example.first.studytest.PullRefresh.NormalPullRefreshActivity;
@@ -33,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new BtnClick());
 
         btn = findViewById(R.id.AlarmManager);
+        btn.setOnClickListener(new BtnClick());
+
+        btn = findViewById(R.id.BlueTooth);
+        btn.setOnClickListener(new BtnClick());
+
+        btn = findViewById(R.id.AlertDialog);
+        btn.setOnClickListener(new BtnClick());
+
+        btn = findViewById(R.id.Intent);
         btn.setOnClickListener(new BtnClick());
     }
 
@@ -59,6 +71,18 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.AlarmManager: // AlarmManager
                     intent.setClass(MainActivity.this, AlarmManagerActivity.class);
+                    break;
+
+                case R.id.BlueTooth: // BlueTooth
+                    intent.setClass(MainActivity.this, BlueToothMainActivity.class);
+                    break;
+
+                case R.id.AlertDialog: // AlertDialog
+                    intent.setClass(MainActivity.this, AlertDialogMainActivity.class);
+                    break;
+
+                case R.id.Intent: // Intent
+                    intent.setClass(MainActivity.this, IntentMainActivity.class);
                     break;
             }
             startActivity(intent);

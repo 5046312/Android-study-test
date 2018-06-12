@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.first.studytest">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,7 +29,11 @@
         <activity android:name=".ActionBar.ActionBarActivity" />
         <activity android:name=".ActionBar.NormalActionBarActivity" />
         <activity android:name=".ActionBar.ClickMenuActivity" />
-        <activity android:name=".AlarmManager.AlarmManagerActivity"></activity>
+        <activity android:name=".AlarmManager.AlarmManagerActivity" />
+        <activity android:name=".BlueTooth.BlueToothMainActivity" />
+        <activity android:name=".AlertDialog.AlertDialogMainActivity" />
+        <activity android:name=".Intent.IntentMainActivity" />
+        <activity android:name=".Intent.IntentNewActivity"></activity>
     </application>
 
 </manifest>

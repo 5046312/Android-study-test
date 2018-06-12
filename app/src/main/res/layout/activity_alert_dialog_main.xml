@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AlertDialog.AlertDialogMainActivity"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="confirm"
+        android:id="@+id/alert_dialog_confirm"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="list"
+        android:id="@+id/alert_dialog_list"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="radio"
+        android:id="@+id/alert_dialog_radio"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="select"
+        android:id="@+id/alert_dialog_select"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="prompt"
+        android:id="@+id/alert_dialog_prompt"
+        android:textAllCaps="false"/>
+
+</LinearLayout>
