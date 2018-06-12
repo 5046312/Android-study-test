@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.first.studytest.R;
 
@@ -32,12 +34,20 @@ import java.util.UUID;
 import xyz.bboylin.universialtoast.UniversalToast;
 
 public class BlueToothMainActivity extends AppCompatActivity implements View.OnClickListener {
+    BluetoothDevice device;
+    OutputStream outputStream;
+    BluetoothSocket bluetoothSocket;
+
     boolean openBT = false; // 开启蓝牙
     BluetoothAdapter blueadapter;
     AlertDialog.Builder builder;
 
     Button btn_scan; // 搜索按钮
     Button btn_print; // 打印按钮
+    TextView bt_device_name; // 已连接的设备名
+
+    Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +61,8 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
 
         btn_print = findViewById(R.id.print_bt);
         btn_print.setOnClickListener(this);
+
+        bt_device_name = findViewById(R.id.bt_device_name);
 
         blueadapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -186,9 +198,7 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    BluetoothDevice device;
-    OutputStream outputStream;
-    BluetoothSocket bluetoothSocket;
+
     void connectDevice(BluetoothDevice device) {
         BluetoothDevice bluetoothDevice = blueadapter.getRemoteDevice(device.getAddress());
         new printString(device,"打印文字\n").start();
@@ -208,7 +218,15 @@ public class BlueToothMainActivity extends AppCompatActivity implements View.OnC
                 UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
                 bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid);
                 bluetoothSocket.connect();
-                print("连接成功\n");
+                if(bluetoothSocket.isConnected()){
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            bt_device_name.setText("已连接");
+                        }
+                    });
+                    print("连接成功\n");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
